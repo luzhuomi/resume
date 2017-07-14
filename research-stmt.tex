@@ -1,0 +1,214 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{graphicx}%
+\usepackage{fancyhdr}
+
+
+\theoremstyle{plain} \numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{finalremark}[theorem]{Final Remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}{Question} \topmargin-2cm
+
+%\newcommand{\kl}[1]{\marginpar{\sc KL}{\bf #1}}
+\newcommand{\kl}[1]{}
+
+\newcommand{\comment}[1]{}
+\textwidth6in
+
+\setlength{\topmargin}{0in} \addtolength{\topmargin}{-\headheight}
+\addtolength{\topmargin}{-\headsep}
+
+\setlength{\oddsidemargin}{0in}
+
+\oddsidemargin  0.0in \evensidemargin 0.0in \parindent0em
+
+\pagestyle{fancy}\lhead{Research Statement} \rhead{November 2008}
+\chead{{\large{\bf Kenny Zhuo Ming Lu}}} \lfoot{} \rfoot{\bf \thepage} \cfoot{}
+
+\newcounter{list}
+
+\begin{document}
+
+\raisebox{1cm}
+
+\section{Motivation}
+
+\kl{What is the goal of my research?}
+The goal of my research is to enhance the usability, reliability, 
+maintainability and performance of the software system via programming language
+technology. Many modern programming languages evolve over time.
+The need of new programming tools and language features is 
+emerging due to new system development platforms and new 
+business requirements. A good programming language must equip
+the programmer with ``state-of-the-art'' language features
+and libraries, so that she can focus on the actual problem without
+worrying about the underlying lower-level routines.
+
+\kl{What is the focus?}
+In pursuit of this goal, my research focuses on {\em statically-typed
+programming languages}, such as C and Java. These languages
+provide specific compile-time guarantee about the absence of certain
+program errors. As a result, new language features will not create new
+burden to the programmer, as they must be asserted by the type system.
+Further more, the static property of a program often allows us 
+to perform compile-time optimization. 
+
+\kl{What is the problem?}
+Unfortunately, the evolution of the programming languages 
+is not catching up with the pace of hardware evolution.
+For example, we have stepped into a multi-core era.
+But many of us are still worried about whether our programs will terminate when they are executed on a multi-core system, until we realize
+that {\em software transactional memory} \cite{stm} may automatically 
+resolve the potential deadlock for us. 
+My research explores the possibility of employing the cutting-edge
+programming idioms and techniques into the existing 
+programming languages, enhancing the usability and performance
+in the context of the new development platforms and new requirement. 
+Below I describe what I have achieved as well as my future directions.
+
+
+\section{Type-based Language Extension and Optimization}
+
+The current focus of my research is {\em type-based language 
+extension and optimization}. As part of my 
+graduate project, I co-authored a language extension called XHaskell.
+
+\subsection{XHaskell}
+XHaskell is a language extension to Haskell \cite{xhaskell} 
+which combines regular expression type, 
+which is available in XDuce \cite{XDuceTyPHD}, and parametric
+polymorphism and algebraic datatypes, which are available in Haskell.
+Parametric polymorphism is a very common features in most of the 
+modern languages such as Java and Haskell. It allows us to specify a
+common routine for different types of values. Algebraic datatype
+allows us to build data structures in Haskell. Regular expression
+type, on the other hand, is an unique language feature. 
+It is originated in the XDuce language. It is used to capture
+static information of semi-structured data, such as XML. In
+combination with regular expression pattern and semantic subtyping,
+programmers are able to specify XML transformation routine concisely.
+The XDuce type system provides static guarantees for the program, so that
+the program will not running into error when being executed. 
+
+In collaboration with Dr. Martin Sulzmann, I have developed a
+type-directed translation scheme which translates XHaskell programs
+(Haskell code + XDuce code) into pure Haskell programs. Therefore
+the resulting Haskell programs can be compiled into binary executables.
+There are two major advantages. First, XDuce programmers have full
+access to the existing libraries provided by Haskell; at the same
+time Haskell programmers are able to describe powerful transformation
+using regular expression types and patterns. Secondly, the XHaskell
+programs are much more efficient as compared their XDuce counter-parts.
+There are two factors contributing to the performance gain. 
+The first factor is the type-based analysis which is performed on the 
+source programs. The pattern matching routines are highly optimized
+as they are represented in terms of type-specific coercions. The second 
+factor is that XHaskell programs are compiled into binary code whereas
+XDuce programs are always interpreted. 
+
+The main technique being used in this project is the
+``proofs-are-programs'' principle (A.K.A. Curry-Howard Isomorphism). 
+This technique is not only applicable  to functional
+languages, but also to imperative language such as C and Java.
+
+We proposed the first prototype implementation using Haskell type class
+in \cite{semantic-subtyping}. In a later work \cite{ml-workshop05}, 
+we reformulated the prototype into a language extension. 
+Finally in \cite{ifl2007}, we completed the implementation of the entire system.
+
+
+%\subsection{Multi-headed Erlang}
+
+
+
+
+\section{Future Directions}
+
+\subsection{Type-directed Program Parallelization}
+Program Parallelization has become popular recently. There have been 
+some attempts to automate the process of ``parallelizing'' a
+sequential program.
+
+One nice property about pure functional languages is that
+the variables are immutable. Therefore it is easy for us to identify
+which program snippet is independent of the rest of the program
+and therefore we can execute that snippet in parallel with the rest of
+the code. 
+
+There have been some research projects trying to apply this concept
+to the context of imperative languages such as C++ \cite{mapreduce} 
+and Java \cite{hadoop}. However, there are limitations with these
+approaches. The programmer needs to recast the existing problem into 
+one which is solvable by using the {\tt map} and {\tt reduce} operations.
+This process is not automated, and very often it is non-trivial.
+
+With static program analysis, the compiler
+is able to identify program patterns which can be specialized.
+With type-directed transformation, we are able to rewrite the program 
+automatically into a new form such that it is parallelizable. The 
+type soundness property guarantees that the resulting program is
+well-typed. Through static analysis, it is easy for us to justify that the
+transformation preserves the original semantics.
+
+
+\subsection{Distributed Program Synchronization}
+Distributed Computing is another interesting topic. In the distributed
+computing setting, program and data are fragmented into smaller parts and 
+distributed to many nodes across the network, then executed concurrently. 
+In the absence of shared
+memory, process synchronization becomes essential. Traditional process
+synchronization methods are often too low-level. The message passing routines
+are deeply coupled within the program logic. This greatly impacts 
+the flexibility of design and the maintainability of the codes.
+
+Recently the Erlang \cite{erlang} style of actor programming is becoming
+an interesting case study. In Erlang, inter-process communication
+routines are expressed in terms of explicit {\tt send} and {\tt receive}
+constructs. Data and messages are passed among nodes via these
+constructs. Incorporating this feature into main stream imperative
+languages such as C and Java becomes an exciting problem. 
+
+Software Transactional Memory (STM) \cite{stm} was recently introduced to
+community. The purpose of using STM is to reduce the effort of 
+writing deadlock-free programs. The programmer is freed from 
+writing explicit locks and semaphores for synchronization. (This is
+similar to the introduction of garbage collection, which 
+frees the programmer from writing {\tt malloc} and {\tt free} statements.) Currrently, Software Transactional Memory is only applicable in the context of 
+shared memory processors (SMP). It is also possible to apply the
+idea to distributed computing settings. For instance, via memcache
+we are able to allow multiple nodes on a network to share a common
+memory space.  
+
+My idea is to unify the concepts from these two approaches into a
+calculus and apply it to main stream languages such as C and Java. 
+This would allow us to develop a highly-useful distributed computing framework.
+\comment{
+Recently, there have been some work \cite{cchr} which unifies the ideas of the 
+above two projects. Via a notion of Concurrent Constraint Handling
+Rules, it is possible to describe these two features in one single 
+calculus. Therefore, there is ample of space we can explore the hybrid
+approach of the two.
+}
+
+
+
+
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{main}
+
+\end{document}
