@@ -50,19 +50,20 @@
 \kl{What is the goal of my research?}
 The goal of my research is to enhance the usability, reliability, 
 maintainability and performance of the software system via programming language
-technology. Many modern programming languages evolve over time.
-The need of new programming tools and language features is 
+technologies. Many modern programming languages evolve over time.
+The need of new programming tools, compiler and  language features is 
 emerging due to new system development platforms and new 
 business requirements. A good programming language and model must equip
 programmers with ``state-of-the-art'' language features
-and libraries, so that they can focus on the actual problem without
+and libraries, so that they can focus on the actual problems without
 worrying about the underlying lower-level routines.
 
 
 \kl{What is the focus?}
 In pursuit of this goal, my research focuses on
 {\em Type Systems},  {\em Formal Languages and Methods} and {\em Software Analysis}.
-I am passionate in exploring findings and results in these domains and apply them into real world applications
+I am passionate in exploring findings and results in these domains and apply them
+into real world applications,
 such as software engineering, data engineering and software security projects.
 
 
@@ -74,16 +75,17 @@ which combines regular expression type,
 which is available in XDuce \cite{XDuceTyPHD}, and parametric
 polymorphism and algebraic datatypes, which are available in Haskell.
 Parametric polymorphism is a very common features in most of the 
-modern languages such as Java and Haskell. It allows us to specify a
+modern languages such as Java, C\# and Haskell. It allows programmers to specify a
 common routine for different types of values. Algebraic datatype
-allows us to build data structures in Haskell. Regular expression
-type, on the other hand, is an unique language feature. 
+allows programmers to build data structures in functional languages,
+such as Scala and Haskell. Regular expression
+type, on the other hand, is a unique language feature. 
 It is originated in the XDuce language. It is used to capture
 static information of semi-structured data, such as XML. In
-combination with regular expression pattern and semantic subtyping,
-programmers are able to specify XML transformation routine concisely.
+combination with regular expression patterns and semantic subtyping,
+programmers are able to specify semi-structured data transformation routine concisely.
 The XDuce type system provides static guarantees for the program, so that
-the program will not running into error when being executed. 
+the most of the run-time errors of the program will be eliminated.
 
 As part of my PhD thesis, I have developed a
 type-directed translation scheme which translates XHaskell programs
@@ -99,11 +101,11 @@ The first factor is the type-based analysis which is performed on the
 source programs. The pattern matching routines are highly optimized
 as they are represented in terms of type-specific coercions. The second 
 factor is that XHaskell programs are compiled into binary code whereas
-XDuce programs are always interpreted. 
+XDuce programs are executed by interpreters.
 
 The main technique being used in this project is the
 ``proofs-are-programs'' principle (A.K.A. Curry-Howard Isomorphism). 
-This technique is not only applicable  to functional
+This technique is not only applicable to functional
 languages, but also to imperative language such as C and Java.
 
 We proposed the first prototype implementation using Haskell type class
@@ -114,10 +116,32 @@ In another publication \cite{ifl2007}, we presented the complete implementation 
 
 \subsection{Regular Expression, Derivatives, Partial Derivatives and unambiguity}
 
-Besides as an extension to type systems, regular expression is widely adopted in many
-real world application as a simple Domain Specific Language for pattern matching and data processing.
+Besides as an extension to type systems, regular expression is widely used in many
+applications for pattern matching and data processing.
 Despites its populairity, a lot of software bugs and security loop holes arising due to the
-lack of proper debugging support and un-verified library implementation.
+lack of proper debugging support and un-verified library implementation. 
+
+We proposed a new suite of regular expression algorithms and tools based on two well-studied
+but long-neglected regular expression operations,
+Brzozowski's derivative \cite{321249} and Antimirov's partial derivative \cite{Antimirov96Partial}.
+
+In our work \cite{DBLP:conf/ppdp/SulzmannL12}, we proposed and developed a regular expression
+matching algorithm using partial derivatives. Unlike many other existing algorithms, our
+partial derivative matching algorithm does not require any explicit automata construction.
+The algorithm is proven to be correct with respect to the greedy matching policies. Empircal
+benchmarks show that the algorithm is efficient enought to used in real world applications.
+
+Besides greedy matching policy (which is a local longest matching approach),
+POSIX matching policy (which is a global longest matching approach) is also being studied
+and used in some applications. Many existing implementation are un-verified and buggy.
+In our work \cite{DBLP:conf/flops/SulzmannL14}, we proposed
+a POSIX based regular expression matching algorithm whose soundness and correctness can be
+verified. The algorithm is based on regular expression derivative and parse tree coercion.
+We also provide a practical implementation.
+
+
+
+
 
 \kl{debugging}
 
