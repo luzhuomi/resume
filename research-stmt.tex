@@ -111,7 +111,7 @@ languages, but also to imperative language such as C and Java.
 We proposed the first prototype implementation using Haskell type class
  \cite{semantic-subtyping}. In a later work \cite{ml-workshop05}, 
 we reformulated the prototype into a language extension. 
-In another publication \cite{ifl2007}, we presented the complete implementation of the system.
+In another publication \cite{DBLP:conf/ifl/SulzmannL07}, we presented the complete implementation of the system.
 
 
 \subsection{Regular Expression, Derivatives, Partial Derivatives and unambiguity}
@@ -136,9 +136,13 @@ POSIX matching policy (which is a global longest matching approach) is also bein
 and used in some applications. Many existing implementation are un-verified and buggy.
 In our work \cite{DBLP:conf/flops/SulzmannL14}, we proposed
 a POSIX based regular expression matching algorithm whose soundness and correctness can be
-verified. The algorithm is based on regular expression derivative and parse tree coercion.
-We also provide a practical implementation.
+verified. The algorithm is based on regular expression derivative and parse tree construction.
 
+In a recent work \cite{DBLP:journals/corr/abs-1908-03710}, we
+illustrated that in combination with Arden's Law, regular expression derivatives can be used in solving
+regular equations. In this work, we also identified some conditions
+under which the solution is unambiguous. The result is applied in
+developing a symbolic approach of solving 
 
 
 
