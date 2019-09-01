@@ -69,7 +69,7 @@ such as software engineering, data engineering and software security projects.
 
 \section{Past and on-going ressearch}
 
-\subsection{XHaskell}
+\subsection{Regular Expression Type and Pattern Matching}
 XHaskell is a language extension to Haskell \cite{xhaskell} 
 which combines regular expression type, 
 which is available in XDuce \cite{XDuceTyPHD}, and parametric
@@ -110,11 +110,12 @@ languages, but also to imperative language such as C and Java.
 
 We proposed the first prototype implementation using Haskell type class
  \cite{semantic-subtyping}. In a later work \cite{ml-workshop05}, 
-we reformulated the prototype into a language extension. 
-In another publication \cite{DBLP:conf/ifl/SulzmannL07}, we presented the complete implementation of the system.
+we reformulated the prototype as a language extension to ML.
+In the publication \cite{DBLP:conf/ifl/SulzmannL07}, we presented the complete implementation of the system.
 
 
-\subsection{Regular Expression, Derivatives, Partial Derivatives and unambiguity}
+\subsection{Regular Expression, Derivatives, Partial Derivatives and
+  Ambiguity Detection}
 
 Besides as an extension to type systems, regular expression is widely used in many
 applications for pattern matching and data processing.
@@ -134,25 +135,80 @@ benchmarks show that the algorithm is efficient enought to used in real world ap
 Besides greedy matching policy (which is a local longest matching approach),
 POSIX matching policy (which is a global longest matching approach) is also being studied
 and used in some applications. Many existing implementation are un-verified and buggy.
-In our work \cite{DBLP:conf/flops/SulzmannL14}, we proposed
-a POSIX based regular expression matching algorithm whose soundness and correctness can be
-verified. The algorithm is based on regular expression derivative and parse tree construction.
+In our work \cite{DBLP:conf/flops/SulzmannL14}, 
+we show how to obtain a POSIX algorithm for the general parsing problem based on Brzozowski’s regular expression derivatives.
+
+Derivatives can be also applied in detecting ambiguous regular
+expressions. A regular expression is ambiguous if there exist two
+different ways of parsing the same word. In a latter work of ours
+\cite{DBLP:conf/wia/SulzmannL16}, we present a novel method
+based on derivatives to aid the user in diagnosing ambiguous regular expressions.
+
 
 In a recent work \cite{DBLP:journals/corr/abs-1908-03710}, we
 illustrated that in combination with Arden's Law, regular expression derivatives can be used in solving
 regular equations. In this work, we also identified some conditions
-under which the solution is unambiguous. The result is applied in
-developing a symbolic approach of solving 
+under which the solution is unambiguous. The results can be applied
+into at least two applications. Firstly, we can convert a DFA to  a
+regular expression which is unambiguous. Secondly, intersection,
+substraction, shuffling operations among regular expressions can be
+solved symbolically without the explicit conversion to DFAs.
 
 
 
+\subsection{Software Security and Code Obfuscation}
+
+We look into the problems of code obfuscation. In our work
+\cite{DBLP:conf/pepm/Lu19},
+We propose a new control flow obfuscation technique by rewriting the
+source program in the continuation passing style (CPS).
+The continuation is encoded through higher order combinators and
+function pointers at the target language level.
+As a result, the original control flow graph is fragmented which makes
+any software tampering attempt through binary static analysis hard. 
+
+
+
+\section{Work in Progress, Future Direction}
+
+\subsection{Regular Expression Diagnosis Continued}
+The default regular expression libraries in main stream programming
+languages such as Java, C\# and Python are based on backtracking. Besides
+the performance overheads, backtracking based implementation imposed
+security loopholes for possible attack \cite{ReDoS} and software bugs
+\cite{JDK-5050507}. We believe that some of the works we have
+completed in umabiguous diagnosis could be transferred to detect for
+evil regular expressions.
+
+Besides detection, we are interested into debugging and fix
+suggestion. For instance, in the event of an ambiguous or an evil
+regular expression is detected, it would be nice that there a way to
+identify a sound and comprehensible fix. We conjecture that the 
+the symbolic approaches will have certain advantages over DFA
+construction approaches.
+
+
+\subsection{Software Obfuscation}
+We are working towards a formal proof through which we can verify the
+competence level of the CPS based code obfuscation technique that we
+developed in work \cite{DBLP:conf/pepm/Lu19}.  Concurrently, we are
+looking into possible extensions in multiple dimensions. For instance,
+we are considering utilizing exception handling. We could look into
+the possibility of byte code level obfuscation, since many modern
+compilers use Static Single Assignment (SSA) as the intermediate
+language. Our results can be easily adapted to the byte code level.
+Lastly, we would like to explore the possibilty of using deliminated
+continuations. 
+
+
+\subsection{Software Analysis}
 
 \kl{debugging}
 
 
 
 \kl{rewriting frontier}
-
+\comment{
 {\em statically-typed
 programming languages}, such as C and Java. These languages
 provide specific compile-time guarantee about the absence of certain
@@ -247,6 +303,7 @@ memory space.
 My idea is to unify the concepts from these two approaches into a
 calculus and apply it to main stream languages such as C and Java. 
 This would allow us to develop a highly-useful distributed computing framework.
+}
 \comment{
 Recently, there have been some work \cite{cchr} which unifies the ideas of the 
 above two projects. Via a notion of Concurrent Constraint Handling
